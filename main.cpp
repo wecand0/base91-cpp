@@ -3,7 +3,6 @@
 #include <iostream>
 #include <memory>
 
-
 int main() {
     std::unique_ptr<Base91> base91 = std::make_unique<Base91>();
 

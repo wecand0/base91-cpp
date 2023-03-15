@@ -1,7 +1,3 @@
-//
-// Created by user on 14.12.22.
-//
-
 #include "base91.h"
 
 #include <gtest/gtest.h>
