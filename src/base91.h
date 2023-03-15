@@ -1,12 +1,13 @@
 #ifndef BASE91_H
 #define BASE91_H
 
+#include <string_view>
 #include <string>
 
 class Base91 {
 public:
-    [[nodiscard]] std::string encode(const std::string &data) const;
-    [[nodiscard]] std::string decode(const std::string &data) const;
+    [[nodiscard]] std::string encode(const std::string_view &data) const;
+    [[nodiscard]] std::string decode(const std::string_view &data) const;
 
 private:
     const uint8_t b91word_bit_c = 13;

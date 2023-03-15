@@ -1,21 +1,18 @@
 #include <base91.h>
 
-std::string Base91::encode(const std::string &data) const {
+std::string Base91::encode(const std::string_view &data) const {
     if (data.empty()) {
         return {};
     }
 
     uint32_t data_size = data.size();
     uint32_t out_size = data_size;
-    auto compute_encoded_size = [&out_size, this] () {
+    auto compute_encoded_size = [&out_size, this]() {
         out_size <<= 4;
-        if (0 != out_size % b91word_bit_c)
-        {
+        if (0 != out_size % b91word_bit_c) {
             out_size /= b91word_bit_c;
             out_size += 1;
-        }
-        else
-        {
+        } else {
             out_size /= b91word_bit_c;
         }
         return out_size;
@@ -24,7 +21,7 @@ std::string Base91::encode(const std::string &data) const {
     std::string out;
     out.reserve(compute_encoded_size());
 
-    const uint8_t *ib = (uint8_t *) data.c_str();
+    const uint8_t *ib = (uint8_t *) data.data();
     uint32_t queue{};
     uint32_t nbits{};
     for (uint32_t len = 0; len < data_size; len++) {
@@ -54,14 +51,14 @@ std::string Base91::encode(const std::string &data) const {
     return out;
 }
 
-std::string Base91::decode(const std::string &data) const {
+std::string Base91::decode(const std::string_view &data) const {
     if (data.empty()) {
         return {};
     }
 
     uint32_t data_size = data.size();
     uint32_t out_size = data_size;
-    auto compute_decoded_size = [&out_size, this] () {
+    auto compute_decoded_size = [&out_size, this]() {
         out_size *= b91word_bit_c;
         out_size >>= 4;
         return out_size;
@@ -71,7 +68,7 @@ std::string Base91::decode(const std::string &data) const {
     out.reserve(compute_decoded_size());
 
 
-    const uint8_t *ib = (uint8_t *) data.c_str();
+    const uint8_t *ib = (uint8_t *) data.data();
     uint32_t queue{};
     uint32_t nbits{};
     uint32_t val = -1;
